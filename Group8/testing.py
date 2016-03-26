@@ -16,7 +16,7 @@ def get_k_pos(n_s, n_t, r_s, r_h):
 
 # the difference of the nodes’ position along their individual branches 
 # given in percentage of the complete branch length
-def get_k_perc(n_s, n_t, r_s, r_h):
+def get_k_perc(n_s, n_t, end_s, end_h):
 
 	return n_s[0]+n_t[0]
 
@@ -48,6 +48,25 @@ def get_k(b_a, b_h, i, j):
 
 # get the cost of mapping
 def get_mapping_cost(b_a, b_h):
+	length_b_a = 0
+	length_b_h = 0
+
+	# get the lengh of branch a
+	for i in range(1,len(b_a)):
+		d_x_a = b_a[i][0] - b_a[i-1][0]
+		d_y_a = b_a[i][1] - b_a[i-1][1]
+		d_z_a = b_a[i][2] - b_a[i-1][2]
+		length_b_a += sqrt(d_x_a**2 + d_y_a**2 + d_z_a**2)
+	print (length_b_a)
+
+	# get the length of branch h
+	for i in range(1,len(b_h)):
+		d_x_h = b_h[i][0] - b_h[i-1][0]
+		d_y_h = b_h[i][1] - b_h[i-1][1]
+		d_z_h = b_h[i][2] - b_h[i-1][2]
+		length_b_h += sqrt(d_x_h**2 + d_y_h**2 + d_z_h**2)
+	print (length_b_h)
+
 	cost_map = [[0 for x in range(len(b_h)-1)] for x in range(len(b_a)-1)] 
 	for i in range(len(cost_map)):
 		for j in range(len(cost_map[0])):

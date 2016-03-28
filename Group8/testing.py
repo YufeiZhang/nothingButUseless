@@ -8,11 +8,14 @@ s_s = [[[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]],     \
 ]
 
 s_t = [[[0,0,0],[0,4,0],[0,8,0],[0,12,0]],             \
-	   [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]
+	   [[0,0,0],[0,-4,0],[0,-8,0],[0,-12,0]],          \
+	   [[0,0,0],[0,4,1],[0,8,1],[0,12,1]],             \
+	   [[0,0,0],[0,0,-1.5],[0,0,-3],[0,0,-4.5]],       \
+	   [[0,0,0],[0,0,0.15],[0,0,3],[0,0,3.8]] 
 ]
 
 name_s = ["l_arm", "r_arm", "l_wing", "back", "head"]
-name_t = ["l_arm", "back"]
+name_t = ["l_arm", "r_arm", "l_wing", "back", "head"]
 
 # the positional difference (Euclidean distance) between the two nodes
 def get_k_pos(n_s, n_t, r_s, r_h):
@@ -101,24 +104,31 @@ def get_cost_sum(cost_map):
 	return cost_sum
 
 def get_q_matrix(s_s, s_t):
-	q_matrix = [[0 for x in range(len(s_s))] for x in range(len(s_t))]
-	for i in range(len(s_t)):
-		b_h = s_t[i]
-		for j in range(len(s_s)):
-			b_a = s_s[j]
+	q_matrix = [[0 for x in range(len(s_t))] for x in range(len(s_s))]
+	for i in range(len(s_s)):
+		b_a = s_s[i]
+		for j in range(len(s_t)):
+			b_h = s_t[j]
 			cost_map = get_mapping_cost(b_a, b_h)
 			# cost_map is also how we need to retarget
 			# print(cost_map) 
 			q_matrix[i][j] = get_cost_sum(cost_map)
 	return q_matrix
 
-
 # __init__
 q_matrix = get_q_matrix(s_s, s_t)
 
 for i in range(len(q_matrix)):
 	num = q_matrix[i].index(min(q_matrix[i]))
-	print("source =", name_s[num], " -> ", name_t[i])
+	print("target =", name_t[num], " <- ", name_s[i],"~ source")
+
+	b_a = s_t[num]
+	b_h = s_s[i]
+	cost_map = [[0 for x in range(len(b_h)-1)] for x in range(len(b_a)-1)] 
+	cost_map = get_mapping_cost(b_a, b_h)
+	print(cost_map)
+	print()
+
 
 
 

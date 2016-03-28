@@ -1,7 +1,8 @@
 #from pyfbsdk import *
 from math import sqrt
 
-b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]]
+#b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]]
+b_a = [[0,0,0],[0,-3,0],[0,-6,0],[0,-9,0],[0,-12,0]]
 #b_a = [[0,0,0],[0,2,0],[0,4,0],[0,6,0]]
 
 
@@ -18,7 +19,7 @@ def get_k_pos(n_s, n_t, r_s, r_h):
 	delta_y_t_sq = (n_t[1] - r_h[1]) ** 2
 	delta_z_t_sq = (n_t[2] - r_h[2]) ** 2
 	delta_n_t    = sqrt(delta_x_t_sq + delta_y_t_sq + delta_z_t_sq)
-	return abs(delta_n_t - delta_n_s)
+	return (delta_n_t - delta_n_s)
 	#return 0
 
 # the difference of the nodes’ position along their individual branches 
@@ -92,8 +93,20 @@ def get_mapping_cost(b_a, b_h):
 			cost_map[i][j] = get_k(b_a, b_h, i, j, length_b_a, length_b_h, length_n_s, length_n_t)
 	return cost_map
 
+def get_cost_sum(cost_map):
+	cost_sum = 0
+	for i in range(len(cost_map)):
+		cost_sum += min(cost_map[i])
+	return cost_sum
 
-print(get_mapping_cost(b_a, b_h))
+
+
+
+# __init__
+cost_map = get_mapping_cost(b_a, b_h)
+print(cost_map)
+print(get_cost_sum(cost_map))
+print()
 
 
 

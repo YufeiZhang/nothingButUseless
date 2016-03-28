@@ -107,6 +107,8 @@ def get_q_matrix(s_s, s_t):
 		for j in range(len(s_s)):
 			b_a = s_s[j]
 			cost_map = get_mapping_cost(b_a, b_h)
+			# cost_map is also how we need to retarget
+			# print(cost_map) 
 			q_matrix[i][j] = get_cost_sum(cost_map)
 	return q_matrix
 

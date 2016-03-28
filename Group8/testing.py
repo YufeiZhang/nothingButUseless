@@ -112,8 +112,11 @@ def get_q_matrix(s_s, s_t):
 
 
 # __init__
+q_matrix = get_q_matrix(s_s, s_t)
 
-print(get_q_matrix(s_s, s_t))
+for i in range(len(q_matrix)):
+	num = q_matrix[i].index(min(q_matrix[i]))
+	print("source =", name_s[num], " -> ", name_t[i])
 
 
 

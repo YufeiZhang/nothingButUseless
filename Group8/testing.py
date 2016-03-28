@@ -1,15 +1,18 @@
 #from pyfbsdk import *
 from math import sqrt
+s_s = [[[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]],     \
+	   [[0,0,0],[0,-3,0],[0,-6,0],[0,-9,0],[0,-12,0]], \
+	   [[0,0,0],[0,3,2],[0,6,2],[0,9,2],[0,12,2]],     \
+	   [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]],           \
+	   [[0,0,0],[0,0,2],[0,0,4],[0,0,5]] 
+]
 
-b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]]      # left arm
-#b_a = [[0,0,0],[0,-3,0],[0,-6,0],[0,-9,0],[0,-12,0]] # right arm
-#b_a = [[0,0,0],[0,3,2],[0,6,2],[0,9,2],[0,12,2]]     # left wing
-#b_a = [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]           # back
-#b_a = [[0,0,0],[0,0,2],[0,0,4],[0,0,5]]              # head
-#b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0]]
+s_t = [[[0,0,0],[0,4,0],[0,8,0],[0,12,0]],             \
+	   [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]
+]
 
-b_h = [[0,0,0],[0,4,0],[0,8,0],[0,12,0]]              # left arm
-#b_h = [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]
+name_s = ["l_arm", "r_arm", "l_wing", "back", "head"]
+name_t = ["l_arm", "back"]
 
 # the positional difference (Euclidean distance) between the two nodes
 def get_k_pos(n_s, n_t, r_s, r_h):
@@ -101,9 +104,12 @@ def get_cost_sum(cost_map):
 
 
 # __init__
-cost_map = get_mapping_cost(b_a, b_h)
-print(cost_map)
-print(get_cost_sum(cost_map))
+for i in range(len(s_s)):
+	b_a = s_s[i]
+	for j in range(len(s_t)):
+		b_h = s_t[j]
+		cost_map = get_mapping_cost(b_a, b_h)
+		print(name_s[i] + "->" + name_t[j] + ":", get_cost_sum(cost_map))
 print()
 
 

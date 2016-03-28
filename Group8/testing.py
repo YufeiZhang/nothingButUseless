@@ -1,25 +1,23 @@
 #from pyfbsdk import *
 from math import sqrt
 
-#b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]]
-b_a = [[0,0,0],[0,-3,0],[0,-6,0],[0,-9,0],[0,-12,0]]
-#b_a = [[0,0,0],[0,2,0],[0,4,0],[0,6,0]]
+b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]]
+#b_a = [[0,0,0],[0,3,2],[0,6,2],[0,9,2],[0,12,2]]
+#b_a = [[0,0,0],[0,-3,0],[0,-6,0],[0,-9,0],[0,-12,0]]
+#b_a = [[0,0,0],[0,3,0],[0,6,0],[0,9,0]]
+#b_a = [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]
 
 
 b_h = [[0,0,0],[0,4,0],[0,8,0],[0,12,0]]
+#b_h = [[0,0,0],[0,0,-2],[0,0,-4],[0,0,-6]]
 
 # the positional difference (Euclidean distance) between the two nodes
 def get_k_pos(n_s, n_t, r_s, r_h):
-	delta_x_s_sq = (n_t[0] - r_s[0]) ** 2
-	delta_y_s_sq = (n_t[1] - r_s[1]) ** 2
-	delta_z_s_sq = (n_t[2] - r_s[2]) ** 2
-	delta_n_s    = sqrt(delta_x_s_sq + delta_y_s_sq + delta_z_s_sq)
-
-	delta_x_t_sq = (n_t[0] - r_h[0]) ** 2
-	delta_y_t_sq = (n_t[1] - r_h[1]) ** 2
-	delta_z_t_sq = (n_t[2] - r_h[2]) ** 2
-	delta_n_t    = sqrt(delta_x_t_sq + delta_y_t_sq + delta_z_t_sq)
-	return (delta_n_t - delta_n_s)
+	delta_x_sq = (n_t[0] - n_s[0]) ** 2
+	delta_y_sq = (n_t[1] - n_s[1]) ** 2
+	delta_z_sq = (n_t[2] - n_s[2]) ** 2
+	eucli_dist = sqrt(delta_x_sq + delta_y_sq + delta_z_sq)
+	return eucli_dist
 	#return 0
 
 # the difference of the nodes’ position along their individual branches 

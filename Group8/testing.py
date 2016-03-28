@@ -100,17 +100,20 @@ def get_cost_sum(cost_map):
 		cost_sum += min(cost_map[i])
 	return cost_sum
 
-
+def get_q_matrix(s_s, s_t):
+	q_matrix = [[0 for x in range(len(s_s))] for x in range(len(s_t))]
+	for i in range(len(s_t)):
+		b_h = s_t[i]
+		for j in range(len(s_s)):
+			b_a = s_s[j]
+			cost_map = get_mapping_cost(b_a, b_h)
+			q_matrix[i][j] = get_cost_sum(cost_map)
+	return q_matrix
 
 
 # __init__
-for i in range(len(s_s)):
-	b_a = s_s[i]
-	for j in range(len(s_t)):
-		b_h = s_t[j]
-		cost_map = get_mapping_cost(b_a, b_h)
-		print(name_s[i] + "->" + name_t[j] + ":", get_cost_sum(cost_map))
-print()
+
+print(get_q_matrix(s_s, s_t))
 
 
 

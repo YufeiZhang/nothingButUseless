@@ -13,8 +13,8 @@ s_t = [[[0,0,0],[0,4,0],[0,8,0],[0,12,0]],             \
 	   [[0,0,0],[0,0,0.15],[0,0,3],[0,0,3.8]] 
 ]
 
-name_s = ["l_arm", "r_arm", "l_wing", "back", "head"]
-name_t = ["l_arm", "r_arm", "back", "head"]
+name_s = ["s_l_arm", "s_r_arm", "s_l_wing", "s_back", "s_head"]
+name_t = ["t_l_arm", "t_r_arm", "t_back", "t_head"]
 
 # the positional difference (Euclidean distance) between the two nodes
 def get_k_pos(n_s, n_t, r_s, r_h):
@@ -119,11 +119,11 @@ q_matrix = get_q_matrix(s_s, s_t)
 
 for i in range(len(q_matrix)):
 	num = q_matrix[i].index(min(q_matrix[i]))
-	print("target =", name_t[num], " <- ", name_s[i],"~ source")
+	print("source:", name_s[i]," -> target:", name_t[num])
 
-	b_a = s_t[num]
-	b_h = s_s[i]
-	cost_map = [[0 for x in range(len(b_h)-1)] for x in range(len(b_a)-1)] 
+	b_a = s_s[i]
+	b_h = s_t[num]
+	cost_map = [[0 for x in range(len(b_a)-1)] for x in range(len(b_h)-1)] 
 	cost_map = get_mapping_cost(b_a, b_h)
 	print(cost_map)
 	print()

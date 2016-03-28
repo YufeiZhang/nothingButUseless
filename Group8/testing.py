@@ -9,13 +9,12 @@ s_s = [[[0,0,0],[0,3,0],[0,6,0],[0,9,0],[0,12,0]],     \
 
 s_t = [[[0,0,0],[0,4,0],[0,8,0],[0,12,0]],             \
 	   [[0,0,0],[0,-4,0],[0,-8,0],[0,-12,0]],          \
-	   [[0,0,0],[0,4,1],[0,8,1],[0,12,1]],             \
 	   [[0,0,0],[0,0,-1.5],[0,0,-3],[0,0,-4.5]],       \
 	   [[0,0,0],[0,0,0.15],[0,0,3],[0,0,3.8]] 
 ]
 
 name_s = ["l_arm", "r_arm", "l_wing", "back", "head"]
-name_t = ["l_arm", "r_arm", "l_wing", "back", "head"]
+name_t = ["l_arm", "r_arm", "back", "head"]
 
 # the positional difference (Euclidean distance) between the two nodes
 def get_k_pos(n_s, n_t, r_s, r_h):

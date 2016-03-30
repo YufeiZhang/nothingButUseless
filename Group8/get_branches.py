@@ -51,10 +51,23 @@ def get_branches(root):
     return branches
 
 
+def get_branches_posi(branches):
+    branches_posi = []
+    node = FBVector3d()
+    for b in branches:
+        bran_posi = []
+        for name in b:
+            n = FBFindModelByLabelName(name)
+            n.GetVector(node, FBModelTransformationType.kModelTranslation)
+            bran_posi.append(node)
+        branches_posi.append(bran_posi)
+    return branches_posi
+
 # Chose the node that has the highest betweeness
 root = FBFindModelByLabelName('Bip01') 
-branches = []
 branches = get_branches(root)
-print(len(branches)) # this tells you how many branches we have
-print(branches)      # this shows all branches in a list
+branches_posi = get_branches_posi(branches)
 
+#print(len(branches)) # this tells you how many branches we have
+#print(branches)     # this shows all branches in a list
+#print(branches_posi)

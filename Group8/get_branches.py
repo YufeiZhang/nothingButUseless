@@ -6,57 +6,58 @@ This file is to read all branches of both target and source skeleton
 This should be using motion-builder
 '''
 
+def get_banch(parents, children, index, branches):
+	#print(index)
+	parents.append(children[0])
+
+	# if there is no children, append this branch to branches
+	if len(children) == 1:
+		branches.append(parents)
+		#print()
+
+	# if there is a children, then go to the child
+	elif len(children) == 2:
+		parents = get_banch(parents, children[1], index+1, branches)
+
+	# if there are several leaves, then search each leaf
+	else:
+		for i in range(1,len(children)):
+			#print(parents[:index+1])
+			#print(children[i])
+			new = []
+			new = get_banch(parents[:index+1], children[i], index+1, branches)
+
+	return parents
+
+
 def get_branches(skeleton):
-    branches, branch, node = [], [], FBVector3d()
-    
-    # get the node point and store it in 'node'
-    goal.GetVector( node, FBModelTransformationType.kModelTranslation)
+	branches = []
+	if len(skeleton) > 1:
+		# len(skeleton) maybe can be changed as number of children
+		for i in range(1,len(skeleton)): # this is to stop the loop
+			branch = []
+			branch.append(skeleton[0])
 
-    # finde the lastNode -> chain_bace.Chidren[0].Chileren[0] ...
-    # and find how many bones are there in total
-    lastNode = chain_base.Children[0]
-    numOfBones = 1
-    while len(lastNode.Children) == 1:
-        lastNode = lastNode.Children[0]
-        numOfBones += 1
-          
-    # If the distance > thresh or iteration < numOfBones * 10 -> countinue
-    while getDist(pn, t) > thresh and iteration < 10*numOfBones:
-        # refresh the screen a the bigining
-        FBSystem().Scene.Evaluate()
+			# initialize the node and get its children
+			parents = branch[:len(branch)]
+			children = skeleton[i]
+			
+			# start the loop to find all leaves
+			branch = get_banch(parents, children, 1, branches)
 
-        # get the latest position of the lastNode and store it to 'pn'
-        lastNode.GetVector(pn, FBModelTransformationType.kModelTranslation)
-        
-        # if current point does not have a parent, set lastNode as chain_base
-        if chain_base.Parent == None:  
-            chain_base = lastNode
-
-        # get the parent of the chain_base
-        # chain_base.Parent is the rotation center
-        chain_base = chain_base.Parent
-        chain_base.GetVector(pm,FBModelTransformationType.kModelTranslation)
-     
-        # get vector1, vector2, and align_matrix as is told in slides
-        vector1 = pn - pm
-        vector2 = t  - pm
-        R = align_matrix(vector1,vector2)
-
-        # This is copied from the sides, marker is the rotation center        
-        marker = chain_base 
-        cur_Ori = FBMatrix() 
-        marker.GetMatrix(cur_Ori,FBModelTransformationType.kModelRotation,False) 
-
-        # This is copied from the sides donig the rotation
-        final_Ori = R * cur_Ori 
-        ori_vec = FBVector3d() 
-        FBMatrixToRotation(ori_vec,final_Ori) 
-        marker.Rotation = ori_vec
-
-        iteration+=1
+			#print()
+	#print("\n\n\n\n")
+	return branches
 
 
-#chain_base = FBFindModelByLabelName('Node')
+if __name__ == "__main__":
+	# on motion builder, maybe I just need to get chain_base instead of skeleton
+	'''
+	The output should be a list of list to store all branckes
+	'''
+    branches = get_branches(skeleton)
+    print(len(branches)) # this tells you how many branches we have
+    print(branches)      # this shows all branches in a list
 
 
 

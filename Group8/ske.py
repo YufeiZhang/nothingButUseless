@@ -36,11 +36,12 @@ skeleton = \
 # I should get 7 branches
 
 def get_banch(parents, children, index, branches):
-	print(index)
+	#print(index)
 	if len(children) == 1:
 		parents.append(children[0])
+		#print(parents)
 		branches.append(parents)
-		print()
+		#print()
 
 	elif len(children) == 2:
 		parents.append(children[0])
@@ -49,10 +50,10 @@ def get_banch(parents, children, index, branches):
 	else:
 		parents.append(children[0])
 		for i in range(1,len(children)):
-			print(parents[:index+1])
-			print(children[i])
+			#print(parents[:index+1])
+			#print(children[i])
 			new = []
-			new = get_banch(parents, children[i], index+1, branches)
+			new = get_banch(parents[:index+1], children[i], index+1, branches)
 			
 	return parents
 
@@ -69,21 +70,19 @@ def get_branches(skeleton):
 			# ---------------------- add code here ----------------------
 
 			branch = get_banch(parents, children, 1, branches)
-
-			# ---------------------- add code end ----------------------
-			
-			#print(branch)
-			print()
-
-
+			# ---------------------- add code  end ----------------------
+			#print()
+	#print()
+	#print()
+	#print()
+	#print()
 	return branches
-	
-
-
 
 
 if __name__ == "__main__":
-    get_branches(skeleton)
+    branches = get_branches(skeleton)
+    print(len(branches))
+    print(branches)
 
 
 

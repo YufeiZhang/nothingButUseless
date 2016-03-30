@@ -52,7 +52,7 @@ def get_banch(parents, children, index, branches):
 			print(parents[:index+1])
 			print(children[i])
 			new = []
-			new = get_banch(parents, children[i], index, branches)
+			new = get_banch(parents, children[i], index+1, branches)
 			
 	return parents
 

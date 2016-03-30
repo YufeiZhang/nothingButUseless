@@ -63,7 +63,7 @@ def get_branches(root):
 
 if __name__ == "__main__":
 	# Chose the node that has the highest betweeness
-	root = FBFindModelByLabelName('JOINT Spine1') 
+	root = FBFindModelByLabelName('ROOT Hips') 
 	#branches = []
     branches = get_branches(root)
     print(len(branches)) # this tells you how many branches we have

@@ -37,51 +37,58 @@ def retrieve_skeleton_graph():
 
 
 def get_banch(parents, children, index, branches):
-	#print(index)
-	#marker = FBFindModelByLabelName('Marker01')
-	#m_pos = FBVector3d() marker.GetVector(m_pos,FBModelTransformationType.kModelTranslation)
-	parents.append(children[0])
+	parents.append(children)
+
+	num_of_path = len(graph.neighbors(children))
+	path = graph.neighbors(children)
+	#print index
 
 	# if there is no children, append this branch to branches
-	if len(children) == 1:
+	if num_of_path == 1:
 		branches.append(parents)
-		#print()
+		print parents, "<- this is one branch"
+		print '\n'
 
 	# if there is a children, then go to the child
-	elif len(children) == 2:
-		parents = get_banch(parents, children[1], index+1, branches)
-
+	elif num_of_path == 2:
+		for i in range(2):
+			#print path[i], "<- path", i
+			#print parents, "<- parents"
+			if path[i] not in parents:
+				children = graph.neighbors(children)[i]
+				#print children, "<- children"
+				parents = get_banch(parents, children, index+1, branches)
+	
 	# if there are several leaves, then search each leaf
 	else:
-		for i in range(1,len(children)):
-			#print(parents[:index+1])
-			#print(children[i])
-			new = []
-			new = get_banch(parents[:index+1], children[i], index+1, branches)
-	#target_rot = FBVector3d(0,90,0)
+		print path
+
+		for i in range(len(path)):
+			if path[i] not in parents:
+				print "need to search thist"
+				new = []
+
+				current_node = graph.neighbors(children)[i]
+				print current_node, "this is the nowa children"
+				
+				new = get_banch(parents[:index+1], current_node, index+1, branches)
 	return parents
 
 
 def get_branches(root):
-	print root
-	print graph.neighbors(root)
-	print len(graph.neighbors(root))
-
 	branches = []
-	if len(skeleton) > 1:
+	if len(graph.neighbors(root)) > 1:
 		for i in range(len(graph.neighbors(root))): # this is to stop the loop
 			branch = []
 			branch.append(root)
 
 			# initialize the node and get its children
 			parents = branch[:len(branch)]
-			children = root[i]
+			children = graph.neighbors(root)[i]
+			#print children
 			
 			# start the loop to find all leaves
 			branch = get_banch(parents, children, 1, branches)
-
-			#print()
-	#print("\n\n\n\n")
 	return branches
 
 
@@ -113,6 +120,8 @@ if __name__ == "__main__":
 	root = nodes[n]
 
 	branches = get_branches(root)
+
+	print(len(branches))
 
 
 

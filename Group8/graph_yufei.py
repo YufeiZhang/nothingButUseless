@@ -46,8 +46,8 @@ def get_banch(parents, children, index, branches):
 	# if there is no children, append this branch to branches
 	if num_of_path == 1:
 		branches.append(parents)
-		print parents, "<- this is one branch"
-		print '\n'
+		print parents
+		print "\n"
 
 	# if there is a children, then go to the child
 	elif num_of_path == 2:
@@ -61,15 +61,15 @@ def get_banch(parents, children, index, branches):
 	
 	# if there are several leaves, then search each leaf
 	else:
+		print "\n-------------------------------------"
 		print path
 
 		for i in range(len(path)):
 			if path[i] not in parents:
-				print "need to search thist"
 				new = []
 
 				current_node = graph.neighbors(children)[i]
-				print current_node, "this is the nowa children"
+				print current_node
 				
 				new = get_banch(parents[:index+1], current_node, index+1, branches)
 	return parents
